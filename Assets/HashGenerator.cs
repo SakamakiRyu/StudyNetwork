@@ -4,12 +4,9 @@ using UnityEngine;
 
 public class HashGenerator : MonoBehaviour
 {
-    private void Start()
-    {
-        var json = JsonUtility.ToJson("aiuえお");
-        GenerateHash256(json);
-    }
-
+    /// <summary>
+    /// データのハッシュ値を返す
+    /// </summary>
     public static string GenerateHash256(string str)
     {
         var sha256 = new SHA256CryptoServiceProvider();

@@ -7,32 +7,22 @@ using System.Text;
 using UnityEngine.Networking;
 
 /// <summary>
-/// 暗号化のテストクラス
+/// データの暗号化クラス
 /// </summary>
-public class CryptTest : MonoBehaviour
+public class DateCryptor : MonoBehaviour
 {
     [SerializeField]
     string date = "あいうえお";
 
     string URL = "http://localhost/php/CreateUser.php";
 
-    string AedIV = "1234567890123456";
-    string AedKey = "1234567890123456";
-
-    void Start()
-    {
-        // byte配列に変換
-        var src = Encoding.UTF8.GetBytes(date);
-
-        var encrypt = Encrypt(src);
-
-        StartCoroutine(PostAsync(encrypt));
-    }
+    const string AedIV = "1234567890123456";
+    const string AedKey = "1234567890123456";
 
     /// <summary>
     /// 暗号化
     /// </summary>
-    private byte[] Encrypt(byte[] src)
+    private static byte[] Encrypt(byte[] src)
     {
         RijndaelManaged rijnMana = new RijndaelManaged();
         rijnMana.KeySize = 128;

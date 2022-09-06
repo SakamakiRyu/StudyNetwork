@@ -6,7 +6,7 @@ public class NetworkManager : MonoBehaviour
 {
     private static NetworkManager instance;
     public static NetworkManager Instance => instance;
- 
+
     private void Awake()
     {
         if (instance == null)
@@ -15,6 +15,7 @@ public class NetworkManager : MonoBehaviour
         }
     }
 
+    #region èCê≥
     public void GetRequest<T>(string url)
     {
         GetRequestAsync<T>(url);
@@ -49,5 +50,19 @@ public class NetworkManager : MonoBehaviour
             Debug.Log(www.downloadHandler.text);
             www.Dispose();
         }
+    }
+    #endregion
+
+    public IEnumerator Request(string uri, string date)
+    {
+        UnityWebRequest req = null;
+        var postDate = System.Text.Encoding.UTF8.GetBytes(date);
+        req = new UnityWebRequest(uri,UnityWebRequest.kHttpVerbPOST)
+        {
+            uploadHandler = new UploadHandlerRaw(postDate),
+            downloadHandler = new DownloadHandlerBuffer()
+        };
+        req.SetRequestHeader("Content-Type", "application/json");
+        yield return req.SendWebRequest();
     }
 }
