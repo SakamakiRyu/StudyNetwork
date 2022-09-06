@@ -6,6 +6,9 @@ using System.Security.Cryptography;
 using System.Text;
 using UnityEngine.Networking;
 
+/// <summary>
+/// 暗号化のテストクラス
+/// </summary>
 public class CryptTest : MonoBehaviour
 {
     [SerializeField]
@@ -18,13 +21,12 @@ public class CryptTest : MonoBehaviour
 
     void Start()
     {
+        // byte配列に変換
         var src = Encoding.UTF8.GetBytes(date);
-        Debug.Log("Byte配列に変換 :" + src);
 
         var encrypt = Encrypt(src);
-        Debug.Log("暗号化 :" + Encoding.UTF8.GetString(encrypt));
 
-        StartCoroutine(DecryptAsync(encrypt));
+        StartCoroutine(PostAsync(encrypt));
     }
 
     /// <summary>
@@ -65,9 +67,11 @@ public class CryptTest : MonoBehaviour
     }
 
     /// <summary>
-    /// 今後実装(phpも含めて)
+    /// 暗号化したデータをサーバーに送信する
     /// </summary>
-    IEnumerator DecryptAsync(byte[] src)
+    /// <param name="src"></param>
+    /// <returns></returns>
+    IEnumerator PostAsync(byte[] src)
     {
         var json = JsonUtility.ToJson(src);
         WWWForm form = new WWWForm();
